@@ -1,21 +1,19 @@
-from browser_use import Agent, Browser, ChatOpenAI
+from browser_use import Agent, ChatOpenAI
 from dotenv import load_dotenv
 import os
 import asyncio
 
 load_dotenv()
 
-browser = Browser(
-    executable_path='C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-    user_data_dir='%LOCALAPPDATA%\\Google\\Chrome\\User Data',
-    profile_directory='Default', 
-)
-
 agent = Agent(
-    task="Visit https://github.com/CTC96/AI_Bot_Structured_Chat_Agent and star the repository",
-    browser=browser,
+    task=f" login in to github use github username = {githubUsername} and"
+       f"github password {githubPassword} and give https://github.com/browser-use/browser-use a star",
     llm=ChatOpenAI(model="gpt-4.1-mini"),
-)
+    )
 
 async def main():
-	await agent.run()
+    history = await agent.run(max_steps=100)
+    return history
+
+if __name__ == "__main__":
+    asyncio.run(main())
